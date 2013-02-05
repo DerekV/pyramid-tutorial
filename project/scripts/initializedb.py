@@ -11,8 +11,10 @@ from pyramid.paster import (
 
 from project.models import (
     DBSession,
-    MyModel,
-    Base,
+    User,
+    Occurance,
+    EventType,
+    Base
     )
 
 
@@ -32,9 +34,7 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
-    with transaction.manager:
-        model = MyModel(name='one', value=1)
-        DBSession.add(model)
+    
 
 if __name__ == '__main__':
     main()
