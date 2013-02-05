@@ -9,6 +9,7 @@
 dist
 build
 eggs
+local/
 parts
 bin
 var
