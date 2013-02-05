@@ -1,10 +1,8 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 
-from .models import (
-    DBSession,
-    Base,
-    )
+from project.models import Base
+from project.models import DBSession
 
 
 def main(global_config, **settings):
