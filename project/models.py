@@ -18,21 +18,22 @@ class EventType(Base):
     __tablename__ = 'event_types'
 
     eid = Column(Integer, primary_key=True)
-    name = Column(Unicode(255), unique=True)
+    description = Column(Unicode(255), unique=True)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, description):
+        self.description = description
+
 
 
 class Occurance(Base):
     __tablename__ = 'occurances'
 
     oid = Column(Integer, primary_key=True)
-    creator_id = Column(Integer, ForeignKey('users.uid'))
+    recorded_by_id = Column(Integer, ForeignKey('users.uid'))
     event_type_id = Column(Integer, ForeignKey('event_types.eid'))
     time = Column(DateTime, default=datetime.datetime.utcnow)
 
-    creator = relationship("User", backref="occurances")
+    recorded_by = relationship("User", backref="observed_occurances")
     event_type = relationship(
         "EventType",
         backref="occurances",
@@ -40,8 +41,8 @@ class Occurance(Base):
         uselist=False
     )
 
-    def __init__(self, creator, event_type):
-        self.creator = creator
+    def __init__(self, recorded_by, event_type):
+        self.recorded_by = recorded_by
         self.event_type = self.event_type
 
 
@@ -50,7 +51,9 @@ class User(Base):
 
     uid = Column(Integer, primary_key=True)
     user_id = Column(Unicode(255), unique=True)
-    name = Column(Unicode(500), unique=True)
 
-    def __init__(self, user_id, name):
+    def __init__(self, user_id):
         self.user_id = user_id
+
+    def publicName():
+        return self.user_id
