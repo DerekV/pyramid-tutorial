@@ -79,3 +79,4 @@ dist
 Data.fs*
 *.sqlite
 *.sqlite.bak
+*.db

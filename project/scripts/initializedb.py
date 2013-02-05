@@ -9,7 +9,7 @@ from pyramid.paster import (
     setup_logging,
     )
 
-from ..models import (
+from project.models import (
     DBSession,
     MyModel,
     Base,
@@ -35,3 +35,6 @@ def main(argv=sys.argv):
     with transaction.manager:
         model = MyModel(name='one', value=1)
         DBSession.add(model)
+
+if __name__ == '__main__':
+    main()
