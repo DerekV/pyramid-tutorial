@@ -23,8 +23,6 @@ class EventType(Base):
     def __init__(self, description):
         self.description = description
 
-
-
 class Occurance(Base):
     __tablename__ = 'occurances'
 
@@ -45,7 +43,6 @@ class Occurance(Base):
         self.recorded_by = recorded_by
         self.event_type = self.event_type
 
-
 class User(Base):
     __tablename__ = 'users'
 
@@ -57,3 +54,4 @@ class User(Base):
 
     def publicName():
         return self.user_id
+

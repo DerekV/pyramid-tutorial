@@ -8,12 +8,27 @@ from project.models import User
 
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
+def rt_home(request):
     try:
         one = DBSession.query(User).filter(User.user_id == 'bob').first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'one': one, 'project': 'project'}
+
+@view_config(route_name='createuser', renderer='templates/user_created.pt')
+def rt_createuser(request):
+   params = request.params
+   userid = params['userid']
+
+   try:
+       one = DBSession.query(User).filter(User.user_id == 'bob').first()
+   except DBAPIError:
+       return Response(conn_err_msg, content_type='text/plain', status_int=500)
+
+   user = User(userid)
+   DBSession.add(user);
+
+   return {'userid': userid, 'success': True, 'message': ""}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
