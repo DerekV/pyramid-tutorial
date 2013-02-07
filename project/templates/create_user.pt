@@ -6,7 +6,14 @@
 </head>
 <body>
 
-<a href="./create-user">Create a New User</a>
+<h1> Create a user</h1>
+<form action="./create-user" method="POST">
+  <p>
+    Username:   <input type="text" name="userid"/><br/>
+    Admin Code: <input type="text" name="code"/>  <br/>
+    <input type="submit" value="create"/>
+  </p>
+</form>
 
 </body>
 </html>

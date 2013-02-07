@@ -15,8 +15,8 @@ def rt_home(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'one': one, 'project': 'project'}
 
-@view_config(route_name='createuser', renderer='templates/user_created.pt')
-def rt_createuser(request):
+@view_config(route_name='usercreated', renderer='templates/user_created.pt')
+def rt_usercreated(request):
    params = request.params
    userid = params['userid']
 
@@ -29,6 +29,10 @@ def rt_createuser(request):
    DBSession.add(user);
 
    return {'userid': userid, 'success': True, 'message': ""}
+
+@view_config(route_name='createuser', renderer='templates/create_user.pt')
+def rt_createuser(request):
+   return {}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
