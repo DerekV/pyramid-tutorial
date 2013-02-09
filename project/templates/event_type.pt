@@ -15,7 +15,9 @@
     <form action="./${event_type_code}" method="post">
       <p>
         Username: <input type="text" name="userid"/><br/>
-        <input type="submit" value="create"/>
+        <div class="bigbutton"> 
+          <input  type="submit" value="click"/>
+        </div>
       </p>
     </form>
   </body>
