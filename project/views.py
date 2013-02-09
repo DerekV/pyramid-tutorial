@@ -5,6 +5,8 @@ from sqlalchemy.exc import DBAPIError
 
 from project.models import DBSession
 from project.models import User
+from project.models import EventType
+
 
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
@@ -15,8 +17,8 @@ def rt_home(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'one': one, 'project': 'project'}
 
-@view_config(route_name='usercreated', renderer='templates/user_created.pt')
-def rt_usercreated(request):
+@view_config(route_name='user_created', renderer='templates/user_created.pt')
+def rt_user_created(request):
    params = request.params
    userid = params['userid']
 
@@ -26,12 +28,29 @@ def rt_usercreated(request):
        return Response(conn_err_msg, content_type='text/plain', status_int=500)
 
    user = User(userid)
-   DBSession.add(user);
+   DBSession.add(user)
 
    return {'userid': userid, 'success': True, 'message': ""}
 
-@view_config(route_name='createuser', renderer='templates/create_user.pt')
-def rt_createuser(request):
+@view_config(route_name='create_user', renderer='templates/create_user.pt')
+def rt_create_user(request):
+   return {}
+
+@view_config(route_name='event_type_created', renderer='templates/event_type_created.pt')
+def rt_event_type_created(request):
+   params = request.params
+   description = params['description']
+
+   et = EventType(description)
+   session = DBSession()
+   session.add(et)
+   session.flush()
+   event_code = et.eid 
+
+   return {'description': description, 'success': True, 'message': "", 'event_code': event_code}
+
+@view_config(route_name='create_event_type', renderer='templates/create_event_type.pt')
+def rt_create_event_type(request):
    return {}
 
 conn_err_msg = """\
