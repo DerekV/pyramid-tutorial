@@ -58,8 +58,11 @@ def rt_event_type(request):
     eid = request.matchdict['eventid']
     
     et = DBSession.query(EventType).get(eid)
+    count = len(et.occurances)
 
-    return {'event_type_description': et.description, 'event_type_code': et.eid }
+    return {'event_type_description': et.description, 
+            'event_type_code': et.eid ,
+            'count':count}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
