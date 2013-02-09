@@ -53,6 +53,14 @@ def rt_event_type_created(request):
 def rt_create_event_type(request):
    return {}
 
+@view_config(route_name='event_type', renderer='templates/event_type.pt')
+def rt_event_type(request):
+    eid = request.matchdict['eventid']
+    
+    et = DBSession.query(EventType).get(eid)
+
+    return {'event_type_description': et.description, 'event_type_code': et.eid }
+
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
