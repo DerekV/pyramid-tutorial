@@ -3,10 +3,12 @@
 <head>
   <title>New Event Type</title>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="./static/styles.css">
 </head>
 <body>
 
-<h1> Create a new event type</h1>
+<h1>Create a new event type</h1>
+
 <form action="./event-type-created" method="post">
   <p>
     Description:   <input type="text" name="description"/><br/>

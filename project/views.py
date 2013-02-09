@@ -9,7 +9,7 @@ from project.models import EventType
 
 
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
+@view_config(route_name='home', renderer='templates/home.pt')
 def rt_home(request):
     try:
         one = DBSession.query(User).filter(User.user_id == 'bob').first()
