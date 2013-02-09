@@ -11,5 +11,12 @@
       Description: ${event_type_description} <br/>
       Count: ${count}
     </p>
+
+    <form action="./${event_type_code}" method="post">
+      <p>
+        Username: <input type="text" name="userid"/><br/>
+        <input type="submit" value="create"/>
+      </p>
+    </form>
   </body>
 </html>

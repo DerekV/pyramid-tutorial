@@ -6,6 +6,7 @@ from sqlalchemy.exc import DBAPIError
 from project.models import DBSession
 from project.models import User
 from project.models import EventType
+from project.models import Occurance
 
 
 
@@ -47,7 +48,10 @@ def rt_event_type_created(request):
    session.flush()
    event_code = et.eid 
 
-   return {'description': description, 'success': True, 'message': "", 'event_code': event_code}
+   return {'description': description, 
+           'success': True, 
+           'message': "", 
+           'event_code': event_code}
 
 @view_config(route_name='create_event_type', renderer='templates/create_event_type.pt')
 def rt_create_event_type(request):
@@ -58,10 +62,17 @@ def rt_event_type(request):
     eid = request.matchdict['eventid']
     
     et = DBSession.query(EventType).get(eid)
+    
+    if 'userid' in request.POST:
+        user_id = request.params['userid']
+        observer = DBSession.query(User).filter(User.user_id==user_id).first()
+        occurance = Occurance(observer, et)
+        DBSession.add(occurance)
+
     count = len(et.occurances)
 
     return {'event_type_description': et.description, 
-            'event_type_code': et.eid ,
+            'event_type_code': et.eid,
             'count':count}
 
 conn_err_msg = """\

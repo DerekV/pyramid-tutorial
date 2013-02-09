@@ -41,7 +41,7 @@ class Occurance(Base):
 
     def __init__(self, recorded_by, event_type):
         self.recorded_by = recorded_by
-        self.event_type = self.event_type
+        self.event_type = event_type
 
 class User(Base):
     __tablename__ = 'users'

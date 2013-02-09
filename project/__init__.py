@@ -19,6 +19,6 @@ def main(global_config, **settings):
     config.add_route('event_type_created', '/event-type-created', request_method='POST')
     config.add_route('create_event_type', '/create-event-type')
     config.add_route('event_type', '/event-types/{eventid:\d+}')
-    
+    config.add_route('add_occurance', '/add-occurance')
     config.scan()
     return config.make_wsgi_app()
