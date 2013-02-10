@@ -18,7 +18,7 @@ class EventType(Base):
     __tablename__ = 'event_types'
 
     eid = Column(Integer, primary_key=True)
-    description = Column(Unicode(255), unique=True)
+    description = Column(Unicode(255))
 
     def __init__(self, description):
         self.description = description
