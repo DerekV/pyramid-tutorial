@@ -14,9 +14,10 @@
       <div class="homeaction"><a href="./create-event-type">Create a New Event Type</a></div>
     </div>
 
-    <div tal:condition="not:logged_in">
+    <div  tal:condition="not:logged_in">
       <h1>Welcome</h1>
       <em>Please log in</em>
+      <div><b>${message}</b></div>
       <form action="/" method="post">
         <p>
           Name: <input type="text" name="userid"/><br/>
