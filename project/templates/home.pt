@@ -6,10 +6,23 @@
     <link rel="stylesheet" type="text/css" href="./static/styles.css"/>
   </head>
   <body>
+    <div tal:condition="logged_in">
+      <p >
+        Hello, ${logged_in | 'guest'}
+      </p>
+      <div class="homeaction"><a href="./create-user">Create a New User</a></div>
+      <div class="homeaction"><a href="./create-event-type">Create a New Event Type</a></div>
+    </div>
 
-    <div class="homeaction"><a href="./create-user">Create a New User</a></div>
-
-    <div class="homeaction"><a href="./create-event-type">Create a New Event Type</a></div>
-
+    <div tal:condition="not:logged_in">
+      <h1>Welcome</h1>
+      <em>Please log in</em>
+      <form action="/" method="post">
+        <p>
+          Name: <input type="text" name="userid"/><br/>
+          <input type="submit" value="Log In"/>
+        </p>
+      </form>
+    </div>
   </body>
 </html>

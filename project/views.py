@@ -1,5 +1,8 @@
 from pyramid.response import Response
+from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
+from pyramid.security import authenticated_userid
+from pyramid.security import remember
 
 from sqlalchemy.exc import DBAPIError
 
@@ -8,15 +11,22 @@ from project.models import User
 from project.models import EventType
 from project.models import Occurance
 
-
-
 @view_config(route_name='home', renderer='templates/home.pt')
 def rt_home(request):
     try:
         one = DBSession.query(User).filter(User.user_id == 'bob').first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one': one, 'project': 'project'}
+
+    if 'userid' in request.POST:
+        userid = request.params['userid']
+        headers = remember(request,userid)
+        return HTTPFound(
+            location=request.route_url('home',
+                                       username=userid),
+            headers=headers)
+    
+    return {'logged_in': authenticated_userid(request) }
 
 @view_config(route_name='user_created', renderer='templates/user_created.pt')
 def rt_user_created(request):
@@ -73,7 +83,8 @@ def rt_event_type(request):
 
     return {'event_type_description': et.description, 
             'event_type_code': et.eid,
-            'count':count}
+            'count':count,
+            'logged_in': authenticated_userid(request)}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
