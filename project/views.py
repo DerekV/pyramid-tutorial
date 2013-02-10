@@ -3,6 +3,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.security import authenticated_userid
 from pyramid.security import remember
+from pyramid.security import forget
 
 from sqlalchemy.exc import DBAPIError
 
@@ -30,6 +31,11 @@ def rt_home(request):
                 location=request.route_url('home',
                                            username=user_id),
                 headers=headers)
+
+    if 'logout' in request.POST:
+        headers=forget(request)
+        return HTTPFound(
+            location=request.route_url('home'), headers=headers)
     
     return {'logged_in': authenticated_userid(request),
             'message': message}

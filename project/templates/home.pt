@@ -12,6 +12,13 @@
       </p>
       <div class="homeaction"><a href="./create-user">Create a New User</a></div>
       <div class="homeaction"><a href="./create-event-type">Create a New Event Type</a></div>
+
+      <form action="/" method="post">
+        <p>
+          <input type="submit" value="logout" name="logout"/>
+        </p>
+      </form>
+
     </div>
 
     <div  tal:condition="not:logged_in">
@@ -21,7 +28,7 @@
       <form action="/" method="post">
         <p>
           Name: <input type="text" name="userid"/><br/>
-          <input type="submit" value="Log In"/>
+          <input type="submit" value="Log In" name="login"/>
         </p>
       </form>
     </div>
