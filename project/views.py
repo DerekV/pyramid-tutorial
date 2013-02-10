@@ -73,8 +73,8 @@ def rt_event_type(request):
     
     et = DBSession.query(EventType).get(eid)
     
-    if 'userid' in request.POST:
-        user_id = request.params['userid']
+    user_id = authenticated_userid(request)
+    if user_id is not None:
         observer = DBSession.query(User).filter(User.user_id==user_id).first()
         occurance = Occurance(observer, et)
         DBSession.add(occurance)
@@ -84,7 +84,7 @@ def rt_event_type(request):
     return {'event_type_description': et.description, 
             'event_type_code': et.eid,
             'count':count,
-            'logged_in': authenticated_userid(request)}
+            'logged_in': user_id}
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
