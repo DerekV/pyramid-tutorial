@@ -7,17 +7,29 @@
   </head>
   <body>
     <div tal:condition="logged_in">
-      <p >
+      <span>
         Hello, ${logged_in | 'guest'}
-      </p>
+      </span>
+
+      <div class="logout">
+        <form action="/" method="post">
+          <p>
+            <input type="submit" value="logout" name="logout"/>
+          </p>
+        </form>
+      </div>
+
       <div class="homeaction"><a href="./create-user">Create a New User</a></div>
       <div class="homeaction"><a href="./create-event-type">Create a New Event Type</a></div>
 
-      <form action="/" method="post">
-        <p>
-          <input type="submit" value="logout" name="logout"/>
-        </p>
-      </form>
+      <div class="favorites_box">
+        <h2>Your Favorites:</h2>
+        <div class="favorites_list">
+          <div tal:repeat="et favorites">
+            <a href="/event-types/${et.code}">${et.description}</a>
+          </div>
+        </div>
+      </div>
 
     </div>
 

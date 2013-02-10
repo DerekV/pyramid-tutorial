@@ -12,6 +12,7 @@ from project.models import User
 from project.models import EventType
 from project.models import Occurance
 
+
 @view_config(route_name='home', renderer='templates/home.pt')
 def rt_home(request):
     try:
@@ -20,6 +21,8 @@ def rt_home(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
 
     message = ""
+    favorites = []
+    logged_in = authenticated_userid(request)
 
     if 'userid' in request.POST:
         user_id = request.params['userid']
@@ -36,9 +39,15 @@ def rt_home(request):
         headers=forget(request)
         return HTTPFound(
             location=request.route_url('home'), headers=headers)
-    
-    return {'logged_in': authenticated_userid(request),
-            'message': message}
+
+    if logged_in:
+        user = DBSession.query(User).filter(User.user_id == logged_in).first()
+        favorites = map(lambda et : { 'code':et.eid, 'description':et.description},
+                        user.favorites);
+        
+    return {'logged_in': logged_in,
+            'message' : message,
+            'favorites' : favorites}
 
 @view_config(route_name='user_created', renderer='templates/user_created.pt')
 def rt_user_created(request):
@@ -65,8 +74,20 @@ def rt_event_type_created(request):
     description = params['description']
 
     et = EventType(description)
+
+
     session = DBSession()
     session.add(et)
+    session.flush()
+
+    user_id = authenticated_userid(request)
+
+    user = DBSession.query(User).filter(User.user_id == user_id).first()
+
+    if user is not None:
+        user.favorites.append(et)
+        session.flush()
+
     session.flush()
     event_code = et.eid
 
